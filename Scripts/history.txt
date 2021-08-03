@@ -1,0 +1,92 @@
+    1  mkdir .ssh
+    2  cp -p /tmp/.ssh .ssh
+    3  pwd
+    4  ls -al
+    5  exit
+    6  ssh-keygen
+    7  pwd
+    8  cat .ssh/id_rsa.pub 
+    9  ssh sysadmin@10.2.0.5
+   10  ssh sysadmin@10.1.0.5
+   11  ssh sysadmin@10.1.0.6
+   12  cd /etc/
+   13  ls
+   14  cd ansible/
+   15  ls
+   16  ls -al
+   17  vi ansible.cfg 
+   18  vi hosts
+   19  ansible webservers -m ping
+   20  vi hosts
+   21  ansible webservers -m ping
+   22  exit
+   23  ls
+   24  ls a-l
+   25  ls -al
+   26  ls .ssh
+   27  which ssh-keygen
+   28  cd /etc
+   29  cd ansible/
+   30  vi ansible.cfg 
+   31  exit
+   32  ls
+   33  ls a-l
+   34  ls -al
+   35  ls -al .ssh
+   36  cd /etc/ansibl
+   37  cd /etc/ansible
+   38  ls
+   39  vi my-playbook.yml
+   40  mv my-playbook.yml activity.yml
+   41  vi activity.yml
+   42  mv activity.yml my-playbook-activity.yml
+   43  ansible-playbook my-playbook-activity.yml 
+   44  vi activity.yml
+   45  ls
+   46  vi my-playbook-activity.yml 
+   47  ansible-playbook my-playbook-activity.yml 
+   48  ls
+   49  vi my-playbook-solution.yml
+   50  nano my-playbook-solution.yml
+   51  vi !
+   52  vi *sol*
+   53  ansible-playbook my-playbook-solution.yml 
+   54  ls
+   55  vi **act*
+   56  curl 10.1.0.5
+   57  ssh sysadmin@10.1.0.5
+   58  ssh sysadmin@10.1.0.6
+   59  cat /root/.ssh/id_rsa.pub 
+   60  uname -a
+   61  ssh sysadmin@10.1.0.7
+   62  ls -al
+   63  vi hosts
+   64  history
+   65  ansible-playbook my-playbook-solution.yml 
+   66  ssh sysadmin@10.1.0.7
+   67  history
+   68  exit
+   69  ls -al .ssh/
+   70  history | grep ssh
+   71  ls -al
+   72  cd /etc/ansible/
+   73  ls -al
+   74  cd file
+   75  ls -al
+   76  which file
+   77  file
+   78  cd files
+   79  ls -al
+   80  vi metricbeat-config.yml 
+   81  ls -al
+   82  view filebeat-config.yml 
+   83  cd ..
+   84  view filebeat-playbook.yml 
+   85  nslookup ibeatyou.com
+   86  dig
+   87  ftp rainydaydreams.com
+   88  sftp
+   89  sftp rainydaydreams.com
+   90  sftp whitnall@rainydaydreams.com
+   91  ssh whitnall@rainydaydreams.com
+   92  history > files/history.txt
