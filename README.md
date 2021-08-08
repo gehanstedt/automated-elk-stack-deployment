@@ -36,29 +36,33 @@ The configuration details of each machine may be found below.
 
 The machines on the internal network are not exposed to the public Internet. 
 
-Only the _____ machine can accept connections from the Internet. Access to this machine is only allowed from the following IP addresses:
-- _TODO: Add whitelisted IP addresses_
+Only the Jumpbox and ELK VM machines can accept connections from the Internet. Access to these machines is only allowed from the following IP addresses:
+- 98.9.9.9   (Note:  this is a synthetic address and updated as the actual IP address changes for our "Authorized Remote Client")
 
-Machines within the network can only be accessed by _____.
-- _TODO: Which machine did you allow to access your ELK VM? What was its IP address?_
+Machines within the network can only be accessed by Jump Server and ELK VM via the same 98.9.9.9 IP address.
 
 A summary of the access policies in place can be found in the table below.
 
-| Name     | Publicly Accessible | Allowed IP Addresses |
-|----------|---------------------|----------------------|
-| Jump Box | Yes/No              | 10.0.0.1 10.0.0.2    |
-|          |                     |                      |
-|          |                     |                      |
+| Name     | Publicly Accessible | Allowed IP Addresses  |
+|----------|---------------------|-----------------------|
+| Jump Box |  Yes                | 98.9.9.9 via 22 (SSH) |
+| ELK VM   |  Yes                | 98.9.9.9 via 5601     |
+| Web-1    |  No                 | Jump Box, ELK VM      |
+| Web-2    |  No                 | Jump Box, ELK VM      |
+| Web-3    |  No                 | Jump Box, ELK VM      |
 
 ### Elk Configuration
 
-Ansible was used to automate configuration of the ELK machine. No configuration was performed manually, which is advantageous because...
-- _TODO: What is the main advantage of automating configuration with Ansible?_
+Ansible was used to automate configuration of the ELK machine. No configuration was performed manually, which is advantageous because its repeatable and reduces / eliminates mistakes.
 
 The playbook implements the following tasks:
-- _TODO: In 3-5 bullets, explain the steps of the ELK installation play. E.g., install Docker; download image; etc._
-- ...
-- ...
+- Download the appropriate Debian package for either filebeat or metricbeat, depending on the deployment being run
+- Install the Debian package
+- Drop in the appropriate filebeat.yml or metricbeat.yml file
+- Enable the module
+- Setup filebeat / metricbeat
+- Start the Service
+- Set the service to start on boot
 
 The following screenshot displays the result of running `docker ps` after successfully configuring the ELK instance.
 
