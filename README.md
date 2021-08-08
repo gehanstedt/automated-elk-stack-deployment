@@ -66,32 +66,84 @@ The playbook implements the following tasks:
 
 The following screenshot displays the result of running `docker ps` after successfully configuring the ELK instance.
 
-**Note**: The following image link needs to be updated. Replace `docker_ps_output.png` with the name of your screenshot image file.  
-
-
-![TODO: Update the path with the name of your screenshot of docker ps output](Images/docker_ps_output.png)
+![docker ps output image](Images/docker_ps_output.png)
 
 ### Target Machines & Beats
 This ELK server is configured to monitor the following machines:
-- _TODO: List the IP addresses of the machines you are monitoring_
+- Web-1 - 10.1.0.5
+- Web-2 - 10.1.0.6
+- Web-3 - 10.1.0.8
 
 We have installed the following Beats on these machines:
-- _TODO: Specify which Beats you successfully installed_
+- Filebeat 
+- Metricbeat
 
 These Beats allow us to collect the following information from each machine:
-- _TODO: In 1-2 sentences, explain what kind of data each beat collects, and provide 1 example of what you expect to see. E.g., `Winlogbeat` collects Windows logs, which we use to track user logon events, etc._
+- Filebeat  - monitors log and/or locations you specify.  These can be analyzed to see system issues, events as well as find unknown files that appear on the system.
+- Metricbeat - collect metrics from the system and other applications like Apache, MySQL, Nginix, etc and ship them for analysis.
 
 ### Using the Playbook
 In order to use the playbook, you will need to have an Ansible control node already configured. Assuming you have such a control node provisioned: 
 
 SSH into the control node and follow the steps below:
-- Copy the _____ file to _____.
-- Update the _____ file to include...
-- Run the playbook, and navigate to ____ to check that the installation worked as expected.
+- Attch to your ansible container.  You'll first need to find the appropriate one by looking at your existing containers and seeing which one was recnetly used.  For example:
+```
+sysadmin@Jump-Box-Provisioner:~$ sudo docker container list -aa
+CONTAINER ID   IMAGE                           COMMAND                  CREATED       STATUS                      PORTS     NAMES
+d1215acf44ac   cyberxsecurity/ansible:latest   "/bin/sh -c /bin/bas…"   2 weeks ago   Exited (0) 28 seconds ago             cranky_jennings
+c098c215f3e2   cyberxsecurity/ansible:latest   "/bin/sh -c /bin/bas…"   2 weeks ago   Exited (0) 2 weeks ago                relaxed_bell
+87374042c46f   cyberxsecurity/ansible          "/bin/sh -c /bin/bas…"   2 weeks ago   Exited (0) 2 weeks ago                intelligent_franklin
+954d9e0cde1f   cyberxsecurity/ansible          "/bin/sh -c /bin/bas…"   2 weeks ago   Exited (0) 2 weeks ago                zealous_northcutt
+cbef4db3abf6   cyberxsecurity/ansible          "/bin/sh -c /bin/bash"   2 weeks ago   Exited (0) 2 weeks ago                dreamy_wilson
+dedd26fd98c8   cyberxsecurity/ubuntu:bionic    "bash"                   2 weeks ago   Exited (0) 2 weeks ago                priceless_allen
+```
+The `cranky_jennings` was most recent.  So we'll start and attach to that:
+```
+sysadmin@Jump-Box-Provisioner:~$ sudo docker start cranky_jennings
+cranky_jennings
+sysadmin@Jump-Box-Provisioner:~$ sudo docker attach cranky_jennings
+root@d1215acf44ac:~#                                                     
+```
+- Copy the playbook file to `/etc/ansible` folder within the Ansible container
+- Update /etc/ansible/hosts file to reflect the new elk server.  For example, I added:
 
-_TODO: Answer the following questions to fill in the blanks:_
-- _Which file is the playbook? Where do you copy it?_
-- _Which file do you update to make Ansible run the playbook on a specific machine? How do I specify which machine to install the ELK server on versus which to install Filebeat on?_
-- _Which URL do you navigate to in order to check that the ELK server is running?
+```
+[elk]
+10.0.0.5 ansible_python_interpreter=/usr/bin/python3
+```
 
-_As a **Bonus**, provide the specific commands the user will need to run to download the playbook, update the files, etc._
+- Run the playbook, and navigate to http://[your.VM.IP]:5601/app/kibana to check that the installation worked as expected.  
+
+For example:
+
+```
+root@d1215acf44ac:~# ansible-playbook elk.yml
+PLAY [Configure Elk VM with Docker] ****************************************************
+
+TASK [Gathering Facts] *****************************************************************
+ok: [10.1.0.4]
+
+TASK [Install docker.io] ***************************************************************
+changed: [10.1.0.4]
+
+TASK [Install python3-pip] *************************************************************
+changed: [10.1.0.4]
+
+TASK [Install Docker module] ***********************************************************
+changed: [10.1.0.4]
+
+TASK [Increase virtual memory] *********************************************************
+changed: [10.1.0.4]
+
+TASK [Increase virtual memory on restart] **********************************************
+changed: [10.1.0.4]
+
+TASK [download and launch a docker elk container] **************************************
+changed: [10.1.0.4]
+
+TASK [Enable service docker on boot] **************************************
+changed: [10.1.0.4]
+
+PLAY RECAP *****************************************************************************
+10.1.0.4                   : ok=1    changed=7    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0 
+```
